@@ -1,0 +1,16 @@
+%h1= @movie.title
+.jumbotron
+  = @movie.description
+  %h3 Description
+  = @plot
+.jumbotron
+  %p= "Movie rating #{@rating}"
+  - if @like
+    = link_to 'Like', movie_like_path(@movie, @like), method: :delete
+  - else
+    = link_to 'Like', movie_likes_path(@movie), method: :post
+  = "(#{@movie.likes.count})"
+.jumbotron
+  %img(src="https://pairguru-api.herokuapp.com/#{@poster}")
+- if user_signed_in?
+  %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'

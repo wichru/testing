@@ -1,4 +1,5 @@
 class LikesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_movie, only: %i[create destroy]
 
   def create
@@ -8,7 +9,7 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    like = @movie.likes.find(params[:id], user: current_user)
+    like = @movie.likes.find(params[:id])
     like.destroy!
 
     redirect_to @movie

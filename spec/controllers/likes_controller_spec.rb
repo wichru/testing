@@ -1,46 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe LikesController, type: :controller do
-  let(:user) { FactoryBot.create(:user).save }
-  let(:movie) { FactoryBot.create(:movie) }
-  let(:likes) { movie.likes.find_by(user: user.id)}
-
   describe "POST #create" do
+    let(:user) { FactoryBot.create(:user) }
+    let(:movie) { FactoryBot.create(:movie) }
     context "when user is sign in" do
       before { sign_in(user) }
 
-      it "creates like" do
+      it "creates like and redirect" do
         expect do
-          post :create, movie.likes
+          post :create, params: { user_id: user.id, movie_id: movie.id }
         end.to change(Like, :count).by(1)
         expect(response).to have_http_status(:redirect)
       end
+
+      describe "DELETE #destroy" do
+        let(:like) { Like.create!(user_id: user.id, movie: movie) }
+        before { like }
+
+        it "deletes like" do
+          expect do
+            delete :destroy, params: { id: like.id, movie_id: movie.id }
+          end.to change(Like, :count).by(-1)
+        end
+      end
     end
 
-    context "when user already creates link" do
-      let(:like) { Likes.create!(user: user, movie_id: movie.id) }
-
-      it "doesn't allow to create another one" do
+    context "when user is not sign in" do
+      it "doesn't create like" do
         expect do
           post :create, params: { user_id: user.id, movie_id: movie.id }
         end.to_not change(Like, :count)
       end
     end
-    context "when user is not sign in" do
-      it "doesn't create like" do
-        expect do
-          post :create, params: { user_id: user }, movie: movie.id
-        end.to_not change(Like, :count)
-      end
-    end
   end
 
-  describe "DELETE #destroy" do
-    it "deletes comment" do
-      expect do
-        delete :destroy, params: { id: user.id }, movie_id: movie.id
-      end.to change(Like, :count).by(-1)
-      expect(response).to have_http_status(:redirect)
-    end
-  end
 end

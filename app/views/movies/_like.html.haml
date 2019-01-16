@@ -1,0 +1,5 @@
+- if @like
+  = link_to 'Like', movie_like_path(@movie, @like), method: :delete
+- else
+  = link_to 'Like', movie_likes_path(@movie), method: :post
+= "(#{@movie.likes.count})"

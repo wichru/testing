@@ -5,11 +5,8 @@
   = @plot
 .jumbotron
   %p= "Movie rating #{@rating}"
-  - if @like
-    = link_to 'Like', movie_like_path(@movie, @like), method: :delete
-  - else
-    = link_to 'Like', movie_likes_path(@movie), method: :post
-  = "(#{@movie.likes.count})"
+  - if user_signed_in?
+    = render 'like'
 .jumbotron
   %img(src="https://pairguru-api.herokuapp.com/#{@poster}")
 - if user_signed_in?

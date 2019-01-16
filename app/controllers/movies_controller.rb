@@ -7,9 +7,7 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find(params[:id])
-    @plot = MovieServices::MovieDetails.new(@movie.title).details["plot"]
-    @rating = MovieServices::MovieDetails.new(@movie.title).details["rating"]
-    @poster = MovieServices::MovieDetails.new(@movie.title).details["poster"]
+    @details = MovieServices::MovieDetails.new(@movie.title).details
     @like = @movie.likes.find_by(user: current_user)
   end
 

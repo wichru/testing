@@ -1,5 +1,9 @@
 - if @like
-  = link_to 'Like', movie_like_path(@movie, @like), method: :delete
+  = link_to movie_like_path(@movie, @like), method: :delete do
+    = fa_icon 'thumbs-down'
+    Unlike
 - else
-  = link_to 'Like', movie_likes_path(@movie), method: :post
+  = link_to movie_likes_path(@movie), method: :post do
+    = fa_icon 'thumbs-up'
+    Like
 = "(#{@movie.likes.count})"

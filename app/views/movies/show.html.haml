@@ -2,12 +2,12 @@
 .jumbotron
   = @movie.description
   %h3 Description
-  = @plot
+  = @details['plot']
 .jumbotron
-  %p= "Movie rating #{@rating}"
+  %p= "Movie rating #{@details['rating']}"
   - if user_signed_in?
     = render 'like'
 .jumbotron
-  %img(src="https://pairguru-api.herokuapp.com/#{@poster}")
+  %img(src="https://pairguru-api.herokuapp.com/#{@details['poster']}")
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'

@@ -16,7 +16,6 @@ Rails.application.routes.draw do
       get :export
     end
   end
-
   namespace :api do
     namespace :v1, defaults: { format: :json } do
       resources :movies

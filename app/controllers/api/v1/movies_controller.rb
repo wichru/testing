@@ -1,17 +1,7 @@
-class Api::V1::MoviesController < ApiController
+class Api::V1::MoviesController < ApplicationController
   before_action :set_movie
 
-  def show
-    # render json: {
-    #   movies: [
-    #     {
-    #       id: @movie.id,
-    #       title: @movie.title
-    #     }
-    #   ]
-    # }
-    @movies = Movie.all
-  end
+  def show; end
 
   private
 
